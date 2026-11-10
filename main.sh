@@ -25,7 +25,7 @@ REPORT_DIR="$SCRIPT_DIR/$REPORT_DIR"
 
 check_dependencies() {
     # Check if Report directory is available
-    if [[ ! -d "$REPORT_DIR"]]; then
+    if [[ ! -d "$REPORT_DIR" ]]; then
         mkdir "$REPORT_DIR"
     fi
     # check if yq package is available
