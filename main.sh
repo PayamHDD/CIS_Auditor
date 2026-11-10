@@ -176,13 +176,6 @@ main() {
 
     # Execute Audit
     run_audit
-
-    # Generate Report
-    generate_report
-
-    # Summary
-    show_summary
-
 }
 
 # ==========================================

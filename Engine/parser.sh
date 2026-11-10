@@ -1,8 +1,6 @@
-
 # Parser function
 parse_benchmark() {
     FILE="$1"
-    echo "File is ${FILE}"
     while IFS=$'\t' read -r id title level automated aCommand expected; do
         IDS+=("$id")
         TITLE+=("$title")
