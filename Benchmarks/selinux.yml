@@ -10,9 +10,35 @@ controls:
 
     audit:
       command: "rpm -q libselinux"
-      expected: "^libselinux[0-9]+"
+      expected: "^libselinux-[0-9]"
 
     remediation:
       enabled: true
       commands:
         - "dnf install libselinux"
+  - id: "1.3.1.2"
+    title: Ensure SELinux is not disabled in bootloader configuration
+    level: 1
+    type: automated
+
+    audit:
+      command: "grubby --info=ALL | grep -Po '(selinux|enforcing)=0\b'"
+      expected: ""
+
+    remediation:
+      enabled: true
+      commands:
+        - "grubby --update-kernel ALL --remove-args \"selinux=0 enforcing=0\""
+  - id: "1.3.1.3"
+    title: Ensure SELinux policy is configured
+    level: 1
+    type: automated
+
+    audit:
+      command: r"grep -Psi -- '^\h*SELINUXTYPE\h*=\h*(targeted|mls)\b' /etc/selinux/config"
+      expected: "SELINUXTYPE=targeted"
+
+    remediation:
+      enabled: false
+      commands:
+        - ""
