@@ -2,7 +2,7 @@ run_audit() {
     for id in "${!IDS[@]}"; do
 
         if audit_res=$(bash -c "${ACOMMAND[$id]}" 2>/dev/null); then
-            if [[ "$audit_res" =~ ${EXPECTED[$id]} ]]; then
+            if [[ "$audit_res" == "${EXPECTED[$id]}" ]]; then
                 CHECK="PASS"
             else
                 CHECK="FAIL"

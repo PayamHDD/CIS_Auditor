@@ -9,8 +9,8 @@ controls:
     type: automated
 
     audit:
-      command: "rpm -q libselinux"
-      expected: "^libselinux-[0-9]"
+      command: "rpm -q libselinux >/dev/null 2>&1 && echo PASS || echo FAIL"
+      expected: "PASS"
 
     remediation:
       enabled: true
@@ -22,8 +22,8 @@ controls:
     type: automated
 
     audit:
-      command: "grubby --info=ALL | grep -Po '(selinux|enforcing)=0\b'"
-      expected: ""
+      command: "output=$(grubby --info=ALL) || { echo ERROR; exit 0; }; if grep -Pq '(selinux|enforcing)=0\\b' <<< \"$output\"; then echo FAIL; else echo PASS; fi"
+      expected: "PASS"
 
     remediation:
       enabled: true
@@ -35,8 +35,8 @@ controls:
     type: automated
 
     audit:
-      command: r"grep -Psi -- '^\h*SELINUXTYPE\h*=\h*(targeted|mls)\b' /etc/selinux/config"
-      expected: "SELINUXTYPE=targeted"
+      command: "grep -E '^[[:blank:]]*SELINUXTYPE[[:blank:]]*=[[:blank:]]*(targeted|mls)([[:blank:]]|$)' /etc/selinux/config >/dev/null 2>&1 && echo PASS || echo FAIL"
+      expected: "PASS"
 
     remediation:
       enabled: false
