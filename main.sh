@@ -149,7 +149,7 @@ validate_arguments() {
         echo "ERROR: Benchmark file does not exist or is not readable." >&2
         exit 1
     fi
-
+}
 
 # ==========================================
 # 8. Main Execution
