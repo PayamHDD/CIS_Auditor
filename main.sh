@@ -172,20 +172,16 @@ main() {
         exit 1
     }
     
-    for item in $BENCHMARK; do
+    for item in "$BENCHMARK"; do
         # Parse Benchmark
-        OUTPUT_FILE="$item_$(date +(%Y-%m-%d_%r).log)"
-        touch $OUTPUT_FILE
+        OUTPUT_FILE="$REPORT_DIR/$(basename "$item" .yml)_$(date +%Y-%m-%d_%H-%M-%S).log"
+        touch "$OUTPUT_FILE"
         parse_benchmark "$BENCHMARK_DIR/$item"
 
         # Execute Audit
         run_audit
     done
 }
-
-if [[ "$RUN_ALL" ]]; then
-    merge_report
-fi
 # ==========================================
 # 9. Load Modules
 # ==========================================
@@ -196,3 +192,7 @@ source "$ENGINE_DIR/reporter.sh"
 
 # Run
 main "$@"
+
+#if [[ "$RUN_ALL" ]]; then
+#    merge_report
+#fi
