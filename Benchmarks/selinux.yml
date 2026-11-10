@@ -22,7 +22,7 @@ controls:
     type: automated
 
     audit:
-      command: "output=$(grubby --info=ALL) || { echo ERROR; exit 0; }; if grep -Pq '(selinux|enforcing)=0\\b' <<< \"$output\"; then echo FAIL; else echo PASS; fi"
+      command: "grubby --info=ALL | grep -Pq '(selinux|enforcing)=0\\b'; rc=$?; if [[ $rc -eq 1 ]]; then echo PASS; elif [[ $rc -eq 0 ]]; then echo FAIL; else echo ERROR; fi"
       expected: "PASS"
 
     remediation:
