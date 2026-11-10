@@ -1,7 +1,7 @@
 run_audit() {
     for id in "${!IDS[@]}"; do
-        audit_res=$()
-        if [[ "$audit_res" == ""]]; then
+        audit_res=$(bash -c ${ACOMMAND[$id]})
+        if [[ "$audit_res" == "${EXPECTED[$id]}" ]]; then
             CHECK="PASS"
-
-}
+        fi
+        write_report "${IDS[$id]} ${TITLE[$id] $CHECK"
