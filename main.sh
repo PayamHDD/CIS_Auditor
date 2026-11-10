@@ -174,7 +174,8 @@ main() {
     
     for item in $BENCHMARK; do
         # Parse Benchmark
-        OUTPUT_FILE="$item"
+        OUTPUT_FILE="$item_$(date +(%Y-%m-%d_%r).log)"
+        touch $OUTPUT_FILE
         parse_benchmark "$BENCHMARK_DIR/$item"
 
         # Execute Audit
@@ -182,6 +183,9 @@ main() {
     done
 }
 
+if [[ "$RUN_ALL" ]]; then
+    merge_report
+fi
 # ==========================================
 # 9. Load Modules
 # ==========================================
