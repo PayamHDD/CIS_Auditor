@@ -92,7 +92,7 @@ parse_arguments() {
                     echo "ERROR: --benchmark requires a benchmark name." >&2
                     exit 1
                 fi
-                BENCHMARK="$2"
+                BENCHMARK+=("$2")
                 shift 2
                 ;;
 
@@ -107,6 +107,7 @@ parse_arguments() {
 
             --all|-a)
                 RUN_ALL=true
+                BENCHMARK=$AUDIT_FILES
                 shift
                 ;;
 
@@ -170,12 +171,15 @@ main() {
         echo "ERROR: Cannot create report directory." >&2
         exit 1
     }
+    
+    for item in $BENCHMARK; do
+        # Parse Benchmark
+        OUTPUT_FILE="$item"
+        parse_benchmark "$BENCHMARK_DIR/$item"
 
-    # Parse Benchmark
-    parse_benchmark "$BENCHMARK_DIR/$BENCHMARK"
-
-    # Execute Audit
-    run_audit
+        # Execute Audit
+        run_audit
+    done
 }
 
 # ==========================================
