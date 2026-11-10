@@ -1,0 +1,18 @@
+benchmark:
+  name: CIS Oracle Linux 9
+  version: "3.0.0"
+
+controls:
+  - id: "1.3.1.1"
+    title: Ensure SELinux is installed
+    level: 1
+    type: automated
+
+    audit:
+      command: "rpm -q libselinux"
+      expected: "^libselinux[0-9]+"
+
+    remediation:
+      enabled: true
+      commands:
+        - "dnf install libselinux"
