@@ -145,7 +145,7 @@ validate_arguments() {
         exit 1
     fi
 
-    if [[ ! -f "$BENCHMARK" || ! -r "$BENCHMARK" ]]; then
+    if [[ ! -f "$BENCHMARK_DIR/$BENCHMARK" || ! -r "$BENCHMARK_DIR/$BENCHMARK" ]]; then
         echo "ERROR: Benchmark file does not exist or is not readable." >&2
         exit 1
     fi
